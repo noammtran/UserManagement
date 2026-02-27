@@ -1,0 +1,31 @@
+# Root-level Git ignore for User-management monorepo
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.vscode/
+.idea/
+
+# Node / Angular artefacts (front-end)
+front-end/node_modules/
+front-end/dist/
+front-end/coverage/
+front-end/.angular/cache/
+
+# Maven / Spring Boot artefacts (back-end)
+back-end/target/
+
+# Project docs (local only)
+docs/
+
+# LaTeX build artefacts
+*.aux
+*.out
+*.toc
+*.log
+*.synctex.gz
+
+# Local git folders from nested projects
+front-end/.git/
