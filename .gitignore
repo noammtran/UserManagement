@@ -27,5 +27,3 @@ docs/
 *.log
 *.synctex.gz
 
-# Local git folders from nested projects
-front-end/.git/
