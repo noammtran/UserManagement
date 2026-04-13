@@ -1,0 +1,49 @@
+.form-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+label.full-width {
+  grid-column: 1 / -1;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: #374151;
+}
+input, select, textarea {
+  margin-top: 4px;
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+button[type='button'] {
+  background: #6b7280;
+}
+.error {
+  color: #dc2626;
+}
+.success {
+  color: #16a34a;
+}

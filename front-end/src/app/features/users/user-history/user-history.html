@@ -1,0 +1,20 @@
+<div class="history" *ngIf="items.length; else noData">
+  <div class="history-row history-head">
+    <div>Field</div>
+    <div>Old</div>
+    <div>New</div>
+    <div>Changed By</div>
+    <div>Date</div>
+  </div>
+  <div class="history-row" *ngFor="let item of items">
+    <div>{{ item.fieldName }}</div>
+    <div>{{ item.oldValue }}</div>
+    <div>{{ item.newValue }}</div>
+    <div>{{ item.changedBy }}</div>
+    <div>{{ item.changedDate | date: 'short' }}</div>
+  </div>
+</div>
+<ng-template #noData>
+  <p class="muted">No history.</p>
+</ng-template>
+<p>user-history works!</p>

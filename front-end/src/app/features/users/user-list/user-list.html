@@ -1,0 +1,114 @@
+<section class="panel">
+  <div class="panel-header">
+    <div>
+      <h2>User List</h2>
+      <p class="muted">Total: {{ total }}</p>
+    </div>
+    <div class="actions">
+      <input [(ngModel)]="keyword" (keyup.enter)="search()" type="text" placeholder="Search by name/email" aria-label="Search users" />
+      <button (click)="search()" [disabled]="loading" title="Search">Search</button>
+      <button class="primary" (click)="createUser()" title="Create user">Create</button>
+      <button class="danger" (click)="deleteSelected()" [disabled]="loading || selectedIds.size === 0" title="Delete selected">
+        Delete selected
+      </button>
+      <button class="success" (click)="activateSelected()" [disabled]="loading || selectedIds.size === 0" title="Activate selected">
+        Activate selected
+      </button>
+      <button class="danger" (click)="deactivateSelected()" [disabled]="loading || selectedIds.size === 0" title="Deactivate selected">
+        Deactivate selected
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="errorText" class="error">{{ errorText }}</div>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" [checked]="allSelected" (change)="toggleSelectAll($event.target.checked)" aria-label="Select all" /></th>
+          <th>User Name</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Department</th>
+          <th>Position</th>
+          <th>Company</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Updated</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>
+            <input type="checkbox" [checked]="isSelected(user.id)" (change)="toggleSelectOne(user.id, $event.target.checked)" aria-label="Select user" />
+          </td>
+          <td>{{ user.userName }}</td>
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phoneNumber || '-' }}</td>
+          <td>{{ user.departmentName || '-' }}</td>
+          <td>{{ user.positionCode || '-' }}</td>
+          <td>{{ user.companyName || '-' }}</td>
+          <td>
+            <div class="subtext">{{ user.stockCode || '-' }}</div>
+            <div class="muted">{{ user.stockExchange || '' }}</div>
+          </td>
+          <td>
+            <span class="badge" [class.badge-active]="user.statusFlag === 1" [class.badge-inactive]="user.statusFlag !== 1">
+              {{ user.statusFlag === 1 ? 'Active' : 'Inactive' }}
+            </span>
+            <button class="icon-btn" (click)="toggleStatusDropdown(user.id)" title="Change status">Change</button>
+            <div *ngIf="statusDropdownFor === user.id" class="inline-select">
+              <select [ngModel]="user.statusFlag" (ngModelChange)="changeStatus(user, $event)">
+                <option [ngValue]="1">Active</option>
+                <option [ngValue]="0">Inactive</option>
+              </select>
+            </div>
+          </td>
+          <td>
+            <div class="subtext">{{ user.createdDate || '-' }}</div>
+            <div class="muted">{{ user.createdBy || '' }}</div>
+          </td>
+          <td>
+            <div class="subtext">{{ user.lastUpdatedDate || '-' }}</div>
+            <div class="muted">{{ user.lastUpdatedBy || '' }}</div>
+          </td>
+          <td class="row-actions">
+            <button class="ghost" (click)="editUser(user)" title="Edit user">Edit</button>
+            <button class="ghost" (click)="showHistory(user)" title="View history">History</button>
+            <button class="danger ghost" (click)="deleteUser(user.id)" title="Delete user">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <div *ngIf="showForm" class="modal-backdrop" (click)="closeForm()"></div>
+  <div *ngIf="showForm" class="modal">
+    <div class="modal-header">
+      <h3>{{ selectedUser ? 'Cập nhật người dùng' : 'Tạo mới người dùng' }}</h3>
+      <button class="close" (click)="closeForm()" aria-label="Close modal">×</button>
+    </div>
+    <app-user-form [user]="selectedUser" (saved)="loadUsers(); closeForm();"></app-user-form>
+  </div>
+</section>
+<section *ngIf="selectedHistoryUser" class="panel">
+  <div class="panel-header">
+    <div>
+      <h3>History - {{ selectedHistoryUser.fullName }}</h3>
+      <p class="muted">Page {{ historyPagination?.page || historyPage }} / {{ historyPagination?.totalPages || 1 }}</p>
+    </div>
+    <div class="actions">
+      <button (click)="prevHistoryPage()" [disabled]="!historyPagination?.hasPrev">Prev</button>
+      <button (click)="nextHistoryPage()" [disabled]="!historyPagination?.hasNext">Next</button>
+    </div>
+  </div>
+  <app-user-history [items]="histories"></app-user-history>
+</section>
+<p>user-list works!</p>

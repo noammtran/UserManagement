@@ -1,0 +1,21 @@
+.history {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.history-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 8px 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.history-head {
+  background: #f9fafb;
+  font-weight: 600;
+}
+
+.muted {
+  color: #6b7280;
+}

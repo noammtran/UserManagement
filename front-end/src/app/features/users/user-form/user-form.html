@@ -1,0 +1,99 @@
+<div class="form-card">
+  <h3>{{ user ? 'Update user' : 'Create user' }}</h3>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="success" class="success">{{ success }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="grid">
+      <label>
+        User name *
+        <input formControlName="userName" [readonly]="!!user" maxlength="18" />
+        <div class="error" *ngIf="f['userName'].invalid && (f['userName'].dirty || f['userName'].touched)">
+          <span *ngIf="f['userName'].errors?.['required']">User name is required.</span>
+          <span *ngIf="f['userName'].errors?.['maxlength']">Max 18 characters.</span>
+        </div>
+      </label>
+      <label>
+        Full name *
+        <input formControlName="fullName" maxlength="50" />
+        <div class="error" *ngIf="f['fullName'].invalid && (f['fullName'].dirty || f['fullName'].touched)">
+          <span *ngIf="f['fullName'].errors?.['required']">Full name is required.</span>
+          <span *ngIf="f['fullName'].errors?.['maxlength']">Max 50 characters.</span>
+        </div>
+      </label>
+      <label>
+        Email *
+        <input formControlName="email" type="email" maxlength="50" />
+        <div class="error" *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched)">
+          <span *ngIf="f['email'].errors?.['required']">Email is required.</span>
+          <span *ngIf="f['email'].errors?.['email']">Invalid email format.</span>
+          <span *ngIf="f['email'].errors?.['maxlength']">Max 50 characters.</span>
+        </div>
+      </label>
+      <label *ngIf="!user">
+        Password *
+        <input formControlName="password" type="password" maxlength="18" />
+        <div class="error" *ngIf="(f['password'].dirty || f['password'].touched) && f['password'].errors">
+          <span *ngIf="f['password'].errors?.['maxlength']">Max 18 characters.</span>
+        </div>
+      </label>
+      <label>
+        Department *
+        <select formControlName="departmentId">
+          <option [ngValue]="null">-- Select --</option>
+          <option *ngFor="let d of masterData?.departments" [ngValue]="d.id">{{ d.departmentName }}</option>
+        </select>
+        <div class="error" *ngIf="f['departmentId'].invalid && (f['departmentId'].dirty || f['departmentId'].touched)">
+          <span *ngIf="f['departmentId'].errors?.['required']">Department is required.</span>
+        </div>
+      </label>
+      <label>
+        Position *
+        <select formControlName="positionCode">
+          <option [ngValue]="null">-- Select --</option>
+          <option *ngFor="let p of masterData?.positions" [ngValue]="p.lookupCode">{{ p.lookupValue }}</option>
+        </select>
+        <div class="error" *ngIf="f['positionCode'].invalid && (f['positionCode'].dirty || f['positionCode'].touched)">
+          <span *ngIf="f['positionCode'].errors?.['required']">Position is required.</span>
+        </div>
+      </label>
+      <label>
+        Company *
+        <select formControlName="companyProfileId">
+          <option [ngValue]="null">-- Select --</option>
+          <option *ngFor="let c of masterData?.companies" [ngValue]="c.id">{{ c.companyName }}</option>
+        </select>
+        <div class="error" *ngIf="f['companyProfileId'].invalid && (f['companyProfileId'].dirty || f['companyProfileId'].touched)">
+          <span *ngIf="f['companyProfileId'].errors?.['required']">Company is required.</span>
+        </div>
+      </label>
+      <label>
+        Status *
+        <select formControlName="statusFlag">
+          <ng-container *ngIf="masterData?.userStatuses?.length; else fallbackStatus">
+            <option *ngFor="let s of masterData?.userStatuses" [ngValue]="s.lookupCode">{{ s.lookupValue }}</option>
+          </ng-container>
+          <ng-template #fallbackStatus>
+            <option [ngValue]="1">Active</option>
+            <option [ngValue]="0">Inactive</option>
+          </ng-template>
+        </select>
+        <div class="error" *ngIf="f['statusFlag'].invalid && (f['statusFlag'].dirty || f['statusFlag'].touched)">
+          <span *ngIf="f['statusFlag'].errors?.['required']">Status is required.</span>
+        </div>
+      </label>
+      <label class="full-width">
+        Description
+        <textarea formControlName="description" maxlength="255"></textarea>
+        <div class="error" *ngIf="f['description'].invalid && (f['description'].dirty || f['description'].touched)">
+          <span *ngIf="f['description'].errors?.['maxlength']">Max 255 characters.</span>
+        </div>
+      </label>
+    </div>
+    <div class="actions">
+      <button type="submit" [disabled]="loading || form.invalid">{{ user ? 'Update' : 'Create' }}</button>
+      <button type="button" (click)="reset()">Reset</button>
+    </div>
+  </form>
+</div>

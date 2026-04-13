@@ -1,0 +1,39 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.app-header .brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.app-header nav a {
+  color: #cbd5f5;
+  margin-left: 16px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.app-header nav a.active,
+.app-header nav a:hover {
+  color: #ffffff;
+}
+
+.app-main {
+  flex: 1;
+  padding: 20px;
+}
