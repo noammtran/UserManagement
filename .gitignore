@@ -8,6 +8,12 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Environment files (local secrets)
+.env
+.env.*
+!.env.example
+!.env.sample
+
 # Node / Angular artefacts (front-end)
 front-end/node_modules/
 front-end/dist/
@@ -24,6 +30,4 @@ docs/
 *.aux
 *.out
 *.toc
-*.log
 *.synctex.gz
-
